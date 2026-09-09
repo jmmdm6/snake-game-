@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Snake Game</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="game-container">
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="game-header">
+
+        <div class="game-title">
+
+            <span class="title-icon">🐍</span>
+
+            <div>
+                <h1>Snake</h1>
+                <p>Classic Arcade</p>
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <div class="coin-display">
+                <span>🪙</span>
+                <strong id="coins-value">0</strong>
+            </div>
+
+            <button
+                id="shop-button"
+                class="header-button"
+                type="button"
+            >
+                🛍️
+                <span>Loja</span>
+            </button>
+
+            <button
+                id="missions-button"
+                class="header-button"
+                type="button"
+            >
+                🎯
+                <span>Missões</span>
+            </button>
+
+            <button
+                id="stats-button"
+                class="header-button"
+                type="button"
+            >
+                📊
+                <span>Stats</span>
+            </button>
+
+            <button
+                id="achievements-button"
+                class="achievement-button"
+                type="button"
+            >
+                🏆
+                <span>Conquistas</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         STATS
+    ========================== -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <span class="stat-label">SCORE</span>
+            <strong id="score">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">HIGH SCORE</span>
+            <strong id="high-score">0</strong>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-label">LEVEL</span>
+            <strong id="level">1</strong>
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         POWER UPS
+    ========================== -->
+
+    <section class="power-up-status">
+
+        <div id="speed-status" class="power-status">
+            ⚡ Speed
+        </div>
+
+        <div id="double-status" class="power-status">
+            2X Points
+        </div>
+
+        <div id="shield-status" class="power-status">
+            🛡️ Shield
+        </div>
+
+        <div id="magnet-status" class="power-status">
+            🧲 Magnet
+        </div>
+
+        <div id="slow-status" class="power-status">
+            ❄️ Slow
+        </div>
+
+        <div id="ghost-status" class="power-status">
+            👻 Ghost
+        </div>
+
+        <div id="life-status" class="power-status">
+            ❤️ Life
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GAME
+    ========================== -->
+
+    <section class="game-wrapper">
+
+        <canvas
+            id="game-board"
+            width="600"
+            height="600"
+        ></canvas>
+
+
+        <!-- GAME OVERLAY -->
+
+        <div
+            id="game-overlay"
+            class="game-overlay"
+        >
+
+            <div class="overlay-content">
+
+                <div
+                    id="overlay-icon"
+                    class="overlay-icon"
+                >
+                    🐍
+                </div>
+
+                <h2 id="overlay-title">
+                    Snake
+                </h2>
+
+                <p id="overlay-message">
+                    Clique em começar para jogar
+                </p>
+
+                <button
+                    id="start-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    ▶ Começar
+                </button>
+
+                <button
+                    id="restart-button"
+                    class="secondary-button hidden"
+                    type="button"
+                >
+                    🔄 Jogar novamente
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTROLS
+    ========================== -->
+
+    <section class="controls">
+
+        <button
+            class="control-button up"
+            data-direction="up"
+            type="button"
+        >
+            ▲
+        </button>
+
+        <div class="control-row">
+
+            <button
+                class="control-button"
+                data-direction="left"
+                type="button"
+            >
+                ◀
+            </button>
+
+            <button
+                class="control-button pause-control"
+                id="pause-button"
+                type="button"
+            >
+                ⏸
+            </button>
+
+            <button
+                class="control-button"
+                data-direction="right"
+                type="button"
+            >
+                ▶
+            </button>
+
+        </div>
+
+        <button
+            class="control-button down"
+            data-direction="down"
+            type="button"
+        >
+            ▼
+        </button>
+
+    </section>
+
+
+    <!-- =========================
+         INSTRUCTIONS
+    ========================== -->
+
+    <section class="instructions">
+
+        <p>
+            <strong>PC:</strong>
+            Use WASD ou as setas
+        </p>
+
+        <p>
+            <strong>Espaço:</strong>
+            Pausar
+        </p>
+
+        <p>
+            <strong>Mobile:</strong>
+            Use os controles ou deslize na tela
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         THEMES
+    ========================== -->
+
+    <section
+        id="theme-selector"
+        class="theme-selector"
+    >
+
+        <div class="section-title">
+            🎨 Temas
+        </div>
+
+        <div class="theme-buttons">
+
+            <button
+                class="theme-btn active"
+                data-theme="neon"
+                type="button"
+            >
+                🌌 Neon
+            </button>
+
+            <button
+                class="theme-btn"
+                data-theme="dark"
+                type="button"
+            >
+                🌙 Dark
+            </button>
+
+            <button
+                class="theme-btn"
+                data-theme="light"
+                type="button"
+            >
+                ☀️ Light
+            </button>
+
+            <button
+                class="theme-btn"
+                data-theme="forest"
+                type="button"
+            >
+                🌲 Forest
+            </button>
+
+            <button
+                class="theme-btn"
+                data-theme="lava"
+                type="button"
+            >
+                🔥 Lava
+            </button>
+
+            <button
+                class="theme-btn"
+                data-theme="ice"
+                type="button"
+            >
+                ❄️ Ice
+            </button>
+
+        </div>
+
+        <div class="theme-status">
+            Current: Neon
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     ACHIEVEMENT NOTIFICATION
+========================== -->
+
+<div
+    id="achievement-notification"
+    class="achievement-notification"
+>
+
+    <div
+        id="achievement-notification-icon"
+        class="achievement-notification-icon"
+    >
+        🏆
+    </div>
+
+    <div class="achievement-notification-content">
+
+        <span>
+            CONQUISTA DESBLOQUEADA
+        </span>
+
+        <strong id="achievement-notification-name">
+            Nome
+        </strong>
+
+        <p id="achievement-notification-description">
+            Descrição
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ACHIEVEMENTS MODAL
+========================== -->
+
+<div
+    id="achievement-modal"
+    class="achievement-modal"
+>
+
+    <div class="achievement-modal-content">
+
+        <button
+            id="close-achievements"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="achievement-header">
+
+            <div class="achievement-header-icon">
+                🏆
+            </div>
+
+            <div>
+
+                <h2>Conquistas</h2>
+
+                <p>
+                    Complete desafios para desbloquear conquistas.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="achievement-summary">
+
+            <strong id="achievement-count">
+                0 / 8
+            </strong>
+
+            <span>
+                conquistas desbloqueadas
+            </span>
+
+        </div>
+
+        <div
+            id="achievement-list"
+            class="achievement-list"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SHOP MODAL
+========================== -->
+
+<div
+    id="shop-modal"
+    class="shop-modal"
+>
+
+    <div class="shop-modal-content">
+
+        <button
+            id="close-shop"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="shop-header">
+
+            <div class="shop-header-icon">
+                🛍️
+            </div>
+
+            <div>
+
+                <h2>Loja</h2>
+
+                <p>
+                    Personalize sua cobra.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="shop-balance">
+
+            <span>
+                Seu saldo
+            </span>
+
+            <strong>
+                🪙 <span id="shop-balance">0</span>
+            </strong>
+
+        </div>
+
+        <div class="shop-section-title">
+            🐍 Skins
+        </div>
+
+        <div
+            id="skin-list"
+            class="shop-list"
+        ></div>
+
+        <div class="shop-section-title">
+            ✨ Efeitos
+        </div>
+
+        <div
+            id="effect-list"
+            class="shop-list"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     DAILY MISSIONS MODAL
+========================== -->
+
+<div
+    id="missions-modal"
+    class="missions-modal"
+>
+
+    <div class="missions-modal-content">
+
+        <button
+            id="close-missions"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="missions-header">
+
+            <div class="missions-header-icon">
+                🎯
+            </div>
+
+            <div>
+
+                <h2>Missões Diárias</h2>
+
+                <p>
+                    Complete desafios e ganhe moedas.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="missions-reset">
+
+            <span>
+                🔄 Próxima atualização
+            </span>
+
+            <strong id="missions-reset-timer">
+                24:00:00
+            </strong>
+
+        </div>
+
+        <div
+            id="missions-list"
+            class="missions-list"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     STATISTICS MODAL
+========================== -->
+
+<div
+    id="stats-modal"
+    class="stats-modal"
+>
+
+    <div class="stats-modal-content">
+
+        <button
+            id="close-stats"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+        <div class="stats-header">
+
+            <div class="stats-header-icon">
+                📊
+            </div>
+
+            <div>
+
+                <h2>Estatísticas</h2>
+
+                <p>
+                    Seu histórico completo no jogo.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div
+            id="stats-grid"
+            class="stats-grid"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
