@@ -7,7 +7,7 @@ This project takes the classic Snake experience and combines it with a modern in
 ## 🎮 Live Demo
 
 🚀 **Play the game:**
-https://jmmdm6.github.io/
+[https://jmmdm6.github.io/](https://jmmdm6.github.io/snake-game-/)
 
 > Replace the link above with your Snake Game GitHub Pages URL if it is hosted in a specific repository.
 
